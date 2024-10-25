@@ -1,0 +1,92 @@
+.navbar-collapse {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.navbar {
+    background-color: rgb(77, 148, 255);
+
+}
+
+
+.bgimg1 {
+    background-image: url(images/Roadbikebgimg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+
+}
+
+.img1 {
+    width: 250px;
+    height: 250;
+    border-radius: 10px;
+    border: solid 1px;
+    padding: 2px;
+}
+
+.about-C {
+    padding: 0px 30px;
+}
+
+.about-C span {
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-img-top {
+    height: 250px;
+}
+
+.Tyrelogo {
+    height: 100px;
+    width: 250px;
+}
+
+.border1 {
+    border: solid 1px;
+    width: 100px;
+
+}
+
+.icons1 {
+
+    padding: 10px 12px;
+    color: white;
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: solid 3px aqua;
+    background-color: aqua;
+}
+
+.icons2 {
+    padding: 9px 9px;
+    color: white;
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: solid 3px aqua;
+    background-color: aqua;
+}
+
+.icons3 {
+    padding: 9px 11px;
+    color: white;
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: solid 3px aqua;
+    background-color: aqua;
+}
