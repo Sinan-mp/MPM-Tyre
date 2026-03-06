@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 :root {
     --bg: #f4f7fb;
@@ -394,8 +394,8 @@ body {
         width: 100%;
     }
 }
-=======
-﻿@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+
 
 :root {
     --bg: #f4f7fb;
@@ -813,4 +813,4 @@ body {
         width: 100%;
     }
 }
->>>>>>> 61632fd7412b8d00170d70ed5d13ab4b12015e1b
+
