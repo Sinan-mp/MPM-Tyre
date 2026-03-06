@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 .bgimage{background-image: url(images2/CarTyresbgimg.jpg);
     background-size: cover;
@@ -7,4 +8,15 @@
   
   
 
+=======
+
+.bgimage{background-image: url(images2/CarTyresbgimg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    
+  
+  
+
+>>>>>>> 61632fd7412b8d00170d70ed5d13ab4b12015e1b
 }
