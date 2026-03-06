@@ -1,4 +1,402 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+:root {
+    --bg: #f4f7fb;
+    --surface: #eaf1f8;
+    --text: #1a2533;
+    --muted: #5b6979;
+    --primary: #0c6ddf;
+    --primary-dark: #0a59b6;
+    --border: #d8e0eb;
+    --accent: #14b8a6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    color: var(--text);
+    background: linear-gradient(180deg, #f6f9fc 0%, #f2f6fb 100%);
+}
+
+.top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background: rgba(10, 24, 40, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.nav-shell {
+    gap: 1rem;
+    align-items: center;
+}
+
+.brand-mark {
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+}
+
+.brand-mark span {
+    color: #66d4ff;
+}
+
+.nav-link {
+    color: #dbe8f6;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+#productSearchForm {
+    position: relative;
+    min-width: 280px;
+    align-items: center;
+}
+
+.form-control {
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.btn-outline-success {
+    border-color: #63e4bc;
+    color: #63e4bc;
+}
+
+.btn-outline-success:hover {
+    background: #63e4bc;
+    color: #0e2540;
+}
+
+.search-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    margin: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #e8f0f8;
+    box-shadow: 0 14px 24px rgba(17, 38, 61, 0.16);
+    z-index: 2500;
+}
+
+.search-results ul {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+}
+
+.search-results li {
+    border-bottom: 1px solid #eff3f8;
+}
+
+.search-results li:last-child {
+    border-bottom: 0;
+}
+
+.search-results a {
+    display: block;
+    padding: 11px 14px;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.search-results a:hover {
+    background: #f0f7ff;
+}
+
+.search-empty {
+    margin: 0;
+    padding: 12px 14px;
+    color: var(--muted);
+}
+
+.hero {
+    padding: 5.5rem 0 4rem;
+    min-height: 72vh;
+    background: linear-gradient(110deg, rgba(6, 21, 38, 0.88), rgba(12, 59, 113, 0.72)), url(images/Roadbikebgimg.jpg) center/cover no-repeat;
+    color: #fff;
+}
+
+.hero-content {
+    max-width: 720px;
+}
+
+.hero-tag {
+    margin: 0 0 0.7rem;
+    display: inline-block;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 20px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: clamp(1.9rem, 3.8vw, 3.3rem);
+    line-height: 1.16;
+}
+
+.hero p {
+    margin-top: 1rem;
+    color: #deecfc;
+    max-width: 630px;
+}
+
+.hero-actions {
+    margin-top: 1.4rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.btn-solid {
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #05281f;
+}
+
+.btn-solid:hover {
+    background: #0ea694;
+    border-color: #0ea694;
+    color: #04241d;
+}
+
+.btn-light {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: #fff;
+}
+
+.btn-light:hover {
+    background: rgba(255, 255, 255, 0.13);
+    color: #fff;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.stat-card strong {
+    display: block;
+    font-size: 1.1rem;
+}
+
+.stat-card span {
+    color: #cde0f7;
+    font-size: 0.9rem;
+}
+
+.section {
+    padding: 4.2rem 0;
+}
+
+.section-head {
+    margin-bottom: 1.7rem;
+}
+
+.section-head h2 {
+    margin: 0;
+    font-size: 1.9rem;
+}
+
+.section-about {
+    background: var(--surface);
+}
+
+.img1 {
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 14px 24px rgba(19, 37, 58, 0.1);
+}
+
+.about-copy p {
+    margin-top: 0;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.about-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--text);
+    line-height: 1.8;
+}
+
+.cards-grid,
+.brand-grid,
+.contact-grid {
+    row-gap: 1.2rem;
+}
+
+.service-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    background: #e6eef7;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 26px rgba(10, 30, 54, 0.16);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.section-brands {
+    background: #eff4fb;
+}
+
+.brand-card {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e3ebf5;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.Tyrelogo {
+    max-width: 200px;
+    max-height: 72px;
+    width: auto;
+    height: auto;
+}
+
+.section-contact {
+    background: var(--surface);
+}
+
+.contact-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #e6eef7;
+    height: 100%;
+}
+
+.contact-card h3 {
+    margin: 0.9rem 0 0.35rem;
+}
+
+.contact-card p {
+    margin: 0;
+}
+
+.contact-card a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.contact-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 1.45rem;
+    color: #fff;
+    background: linear-gradient(140deg, #16c1ad, #0f94db);
+    border: 0;
+}
+
+.site-footer {
+    background: #081728;
+    color: #c6d7ea;
+    text-align: center;
+    padding: 1.1rem 0;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+@media (max-width: 991px) {
+    .hero {
+        padding-top: 4.4rem;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+    }
+
+    #productSearchForm {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .section {
+        padding: 3.2rem 0;
+    }
+
+    .col-half-xs {
+        width: 100%;
+    }
+
+    .col-third {
+        width: 100%;
+    }
+}
+=======
+﻿@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
 :root {
     --bg: #f4f7fb;
     --surface: #eaf1f8;
@@ -340,10 +738,6 @@ body {
     font-weight: 600;
 }
 
-.contact-icon-link {
-    display: inline-flex;
-}
-
 .icons1,
 .icons2,
 .icons3 {
@@ -382,6 +776,27 @@ body {
     #productSearchForm {
         min-width: 0;
         width: 100%;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    #productSearchForm .form-control {
+        margin-right: 0;
+    }
+
+    #productSearchForm .btn {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .navbar-collapse {
+        margin-top: 0.65rem;
+        padding-bottom: 0.4rem;
+    }
+
+    .nav-link {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
     }
 }
 
@@ -398,3 +813,4 @@ body {
         width: 100%;
     }
 }
+>>>>>>> 61632fd7412b8d00170d70ed5d13ab4b12015e1b
