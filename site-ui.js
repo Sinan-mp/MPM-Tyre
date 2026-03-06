@@ -46,10 +46,5 @@
       target.classList.toggle('show');
     });
   });
-<<<<<<< HEAD
 })();
 
-=======
-})();
-
->>>>>>> 61632fd7412b8d00170d70ed5d13ab4b12015e1b

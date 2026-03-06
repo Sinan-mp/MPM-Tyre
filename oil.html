@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿<!doctype html>
 <html lang="en">
   <head>
@@ -8,17 +7,55 @@
     <link rel="stylesheet" href="site-layout.css">
   </head>
   <style>
-    .card-img-top{height: 250px;}
+    .card-img-top { height: 250px; }
+
+    .oil-search-wrap {
+      max-width: 560px;
+      margin: 16px auto 26px;
+      padding: 0 12px;
+    }
+
+    .oil-search-input {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #cfd8e3;
+      border-radius: 9px;
+      padding: 0 14px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .oil-search-input:focus {
+      border-color: #2985ff;
+      box-shadow: 0 0 0 3px rgba(41, 133, 255, 0.18);
+    }
+
+    .oil-search-empty {
+      display: none;
+      margin: 10px 0 0;
+      color: #a32626;
+      font-size: 14px;
+    }
   </style>
   <body>
     <center><h3>Oils</h3></center>
+    <div class="oil-search-wrap">
+      <input
+        type="search"
+        id="oilSearchInput"
+        class="oil-search-input"
+        placeholder="Search oil (e.g. Servo, Total)"
+        aria-label="Search oil products"
+      >
+      <p id="oilSearchEmpty" class="oil-search-empty">No matching oil found.</p>
+    </div>
     <section>
         <div class="container">
-          <div class="row">
+          <div class="row" id="oilProductGrid">
             <div class="col-full header">
               
               </div>
-              <div class="col-third col-half-xs header">
+              <div class="col-third col-half-xs header oil-product-item">
                 <div class="card" style="width: 18rem;">
                   <img src="images/Oil images/Servo.png" class="card-img-top" alt="Servo oil logo image">
                   <div class="card-body">
@@ -27,7 +64,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-third col-half-xs header">
+              <div class="col-third col-half-xs header oil-product-item">
                 <div class="card" style="width: 18rem;">
                   <img src="images/Oil images/Total.jpeg" class="card-img-top" alt="Total oil logo image">
                   <div class="card-body">
@@ -37,7 +74,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-third col-half-xs header">
+              <div class="col-third col-half-xs header oil-product-item">
                 <div class="card" style="width: 18rem;">
                   <img src="images/Oil images/Mobail.png" class="card-img-top" alt="Mobail oil logo image">
                   <div class="card-body">
@@ -47,7 +84,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-third col-half-xs header">
+              <div class="col-third col-half-xs header oil-product-item">
                 <div class="card" style="width: 18rem;">
                   <img src="images/Oil images/Amaron.png" class="card-img-top" alt="Amaron oil logo image">
                   <div class="card-body">
@@ -65,79 +102,45 @@
       </section>
   
     <script src="site-ui.js"></script>
+    <script>
+      (function () {
+        var input = document.getElementById("oilSearchInput");
+        var emptyState = document.getElementById("oilSearchEmpty");
+        var cards = Array.prototype.slice.call(
+          document.querySelectorAll("#oilProductGrid .oil-product-item")
+        );
+
+        function normalize(text) {
+          return text.toLowerCase().replace(/\s+/g, " ").trim();
+        }
+
+        function filterOils(query) {
+          var q = normalize(query);
+          var visibleCount = 0;
+
+          cards.forEach(function (item) {
+            var titleEl = item.querySelector(".card-title");
+            var title = titleEl ? normalize(titleEl.textContent) : "";
+            var isMatch = !q || title.indexOf(q) !== -1;
+            item.style.display = isMatch ? "" : "none";
+            if (isMatch) {
+              visibleCount += 1;
+            }
+          });
+
+          if (!q) {
+            emptyState.style.display = "none";
+            return;
+          }
+
+          emptyState.style.display = visibleCount ? "none" : "block";
+        }
+
+        input.addEventListener("input", function () {
+          filterOils(input.value);
+        });
+      })();
+    </script>
   </body>
 </html>
 
-
-=======
-﻿<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MPM Tyres</title>
-    <link rel="stylesheet" href="site-layout.css">
-  </head>
-  <style>
-    .card-img-top{height: 250px;}
-  </style>
-  <body>
-    <center><h3>Oils</h3></center>
-    <section>
-        <div class="container">
-          <div class="row">
-            <div class="col-full header">
-              
-              </div>
-              <div class="col-third col-half-xs header">
-                <div class="card" style="width: 18rem;">
-                  <img src="images/Oil images/Servo.png" class="card-img-top" alt="Servo oil logo image">
-                  <div class="card-body">
-                    <h5 class="card-title">Servo</h5>
-                   
-                  </div>
-                </div>
-              </div>
-              <div class="col-third col-half-xs header">
-                <div class="card" style="width: 18rem;">
-                  <img src="images/Oil images/Total.jpeg" class="card-img-top" alt="Total oil logo image">
-                  <div class="card-body">
-                    <h5 class="card-title">Total</h5>
-                    
-                  
-                  </div>
-                </div>
-              </div>
-              <div class="col-third col-half-xs header">
-                <div class="card" style="width: 18rem;">
-                  <img src="images/Oil images/Mobail.png" class="card-img-top" alt="Mobail oil logo image">
-                  <div class="card-body">
-                    <h5 class="card-title">Mobail</h5>
-               
-                    
-                  </div>
-                </div>
-              </div>
-              <div class="col-third col-half-xs header">
-                <div class="card" style="width: 18rem;">
-                  <img src="images/Oil images/Amaron.png" class="card-img-top" alt="Amaron oil logo image">
-                  <div class="card-body">
-                    <h5 class="card-title">Amaron</h5>
-               
-                    
-                  </div>
-                </div>
-              </div>
-             
-    
-    
-            </div>
-          </div>
-      </section>
-  
-    <script src="site-ui.js"></script>
-  </body>
-</html>
-
-
->>>>>>> 61632fd7412b8d00170d70ed5d13ab4b12015e1b
