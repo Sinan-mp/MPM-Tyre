@@ -291,6 +291,72 @@ img {
   }
 }
 
+.home-float {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(12, 109, 223, 0.28);
+  text-decoration: none;
+  font-weight: 700;
+  color: #0a5dbf;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 24px rgba(10, 34, 63, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-float:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(10, 34, 63, 0.24);
+}
+
+.whatsapp-float {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #ffffff;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  box-shadow: 0 10px 24px rgba(18, 140, 126, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-float:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px rgba(18, 140, 126, 0.42);
+}
+
+@media (max-width: 767px) {
+  .home-float {
+    left: 12px;
+    bottom: 12px;
+    min-width: 78px;
+    padding: 0.62rem 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  .whatsapp-float {
+    right: 12px;
+    bottom: 12px;
+    padding: 0.68rem 0.88rem;
+    font-size: 0.85rem;
+  }
+}
+
 
 /* Shared layout and component styles for this project */
 * {

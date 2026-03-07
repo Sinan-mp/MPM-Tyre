@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -17,6 +17,11 @@
       <button class="navbar-toggler" type="button" data-ui-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <form class="d-flex" id="productSearchForm" role="search">
+        <input class="form-control me-2" id="productSearchInput" type="search" placeholder="Search tyres or services" aria-label="Search products">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        <div id="searchResults" class="search-results" aria-live="polite"></div>
+      </form>
       <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
@@ -36,11 +41,6 @@
           </li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
-        <form class="d-flex" id="productSearchForm" role="search">
-          <input class="form-control me-2" id="productSearchInput" type="search" placeholder="Search tyres or services" aria-label="Search products">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-          <div id="searchResults" class="search-results" aria-live="polite"></div>
-        </form>
       </div>
     </div>
   </nav>
@@ -83,7 +83,7 @@
           <img class="img1" src="images/images 1/Tyre logo.jpg" alt="MPM Tyres shop logo">
         </div>
         <div class="col-half-md about-copy">
-          <p>MPM Tyres is located at Elayur, Manjeri Road. Founded by Abdul Muneer MP, our shop has been serving local riders and drivers since 1994.</p>
+          <p>MPM Tyres is located at Elayur, Manjeri - Areekode Road. Founded by Abdul Muneer MP, our shop has been serving local riders and drivers since 1994.</p>
           <p>From high-performance options to budget-friendly tyres, we help customers choose the right fit for bike, scooty, car, and cycle needs.</p>
           <ul class="about-list">
             <li>Expert guidance for tyre selection</li>
@@ -118,7 +118,7 @@
           </a>
         </div>
         <div class="col-third col-half-xs">
-          <a class="service-card" href="#services">
+          <a class="service-card" href="punjerworks.html">
             <img src="images/images 1/Tube and Tubeless Tyre Punjer.jpg" class="card-img-top" alt="Punjer work image">
             <div class="card-body">
               <h3 class="card-title">Punjer Works</h3>
@@ -258,7 +258,7 @@
         { name: "Cycle Tyres", url: "Tyres html/cycle.html", keywords: ["cycle", "bicycle", "tyre", "tyres"] },
         { name: "Tyre Exchanging", url: "tyre exchanging.html", keywords: ["tyre", "exchanging", "change"] },
         { name: "Air Checking", url: "air checking.html", keywords: ["air", "checking", "pressure"] },
-        { name: "Punjer Works", url: "#services", keywords: ["punjer", "puncture", "repair", "tube", "tubeless"] },
+        { name: "Punjer Works", url: "punjerworks.html", keywords: ["punjer", "puncture", "repair", "tube", "tubeless"] },
         { name: "Oil Exchanging", url: "oil.html", keywords: ["oil", "exchanging", "engine oil", "service"] },
         { name: "Cycle Parts", url: "cycle.html", keywords: ["cycle", "parts", "spare", "rim", "tube"] },
         { name: "Bike Parts", url: "Other Services.html", keywords: ["bike", "parts", "spare", "other services"] },
@@ -419,4 +419,3 @@
   </script>
 </body>
 </html>
-

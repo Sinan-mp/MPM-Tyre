@@ -57,4 +57,5 @@
     whatsappLink.textContent = 'WhatsApp Chat';
     document.body.appendChild(whatsappLink);
   }
+
 })();
