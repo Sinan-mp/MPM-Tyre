@@ -814,3 +814,127 @@ body {
     }
 }
 
+
+.contact-card h3 i {
+    margin-right: 0.45rem;
+    color: var(--primary-dark);
+}
+
+.feedback-home-wrap {
+    margin-top: 1.4rem;
+}
+
+.feedback-home-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #e6eef7;
+    padding: 1.2rem;
+}
+
+.feedback-home-card h3 {
+    margin: 0;
+    font-size: 1.35rem;
+}
+
+.feedback-home-card p {
+    margin: 0.45rem 0 1rem;
+    color: var(--muted);
+}
+
+.feedback-home-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.feedback-home-field {
+    margin-bottom: 0.8rem;
+}
+
+.feedback-home-field label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.feedback-home-field input,
+.feedback-home-field select,
+.feedback-home-field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.62rem 0.72rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: #f7fbff;
+    outline: none;
+}
+
+.feedback-home-field input:focus,
+.feedback-home-field select:focus,
+.feedback-home-field textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(12, 109, 223, 0.12);
+}
+
+.feedback-home-submit {
+    border: 1px solid var(--primary-dark);
+    border-radius: 10px;
+    background: var(--primary-dark);
+    color: #fff;
+    padding: 0.65rem 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.feedback-home-submit:hover {
+    background: #084c9b;
+    border-color: #084c9b;
+}
+
+.feedback-success-message {
+    display: none;
+    margin: 0.7rem 0 0;
+    color: #0b7a39;
+    font-weight: 700;
+}
+
+.whatsapp-float {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 2600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #ffffff;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    box-shadow: 0 10px 24px rgba(18, 140, 126, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 26px rgba(18, 140, 126, 0.42);
+}
+
+@media (max-width: 767px) {
+    .feedback-home-row {
+        grid-template-columns: 1fr;
+    }
+
+    .whatsapp-float {
+        right: 12px;
+        bottom: 12px;
+        padding: 0.68rem 0.88rem;
+        font-size: 0.85rem;
+    }
+}
+

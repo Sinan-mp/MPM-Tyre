@@ -46,5 +46,15 @@
       target.classList.toggle('show');
     });
   });
-})();
 
+  if (!document.querySelector('.whatsapp-float')) {
+    var whatsappLink = document.createElement('a');
+    whatsappLink.className = 'whatsapp-float';
+    whatsappLink.href = 'https://wa.me/919946392113?text=Hello%20MPM%20Tyres%2C%20I%20need%20more%20details%20about%20your%20services.';
+    whatsappLink.target = '_blank';
+    whatsappLink.rel = 'noopener noreferrer';
+    whatsappLink.setAttribute('aria-label', 'Chat with MPM Tyres on WhatsApp');
+    whatsappLink.textContent = 'WhatsApp Chat';
+    document.body.appendChild(whatsappLink);
+  }
+})();

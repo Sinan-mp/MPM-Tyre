@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -182,7 +182,7 @@
             <a class="contact-icon-link" href="tel:+919946392113" aria-label="Call MPM Tyres">
               <i class="fa-solid fa-mobile icons1"></i>
             </a>
-            <h3>Mobile</h3>
+            <h3><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Mobile</h3>
             <p><a href="tel:+919946392113">+91 99463 92113</a></p>
           </div>
         </div>
@@ -191,7 +191,7 @@
             <a class="contact-icon-link" href="mailto:mpmtyre@gmail.com" aria-label="Email MPM Tyres">
               <i class="fa-solid fa-envelope icons2"></i>
             </a>
-            <h3>Email</h3>
+            <h3><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</h3>
             <p><a href="mailto:mpmtyre@gmail.com">mpmtyre@gmail.com</a></p>
           </div>
         </div>
@@ -200,9 +200,43 @@
             <a class="contact-icon-link" href="https://maps.app.goo.gl/rQjmUAdhq7ikwXvH6" target="_blank" rel="noopener noreferrer" aria-label="Open MPM Tyres location in Google Maps">
               <i class="fa-solid fa-location-dot icons3"></i>
             </a>
-            <h3>Location</h3>
+            <h3><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Location</h3>
             <p><a href="https://maps.app.goo.gl/rQjmUAdhq7ikwXvH6" target="_blank" rel="noopener noreferrer">Elayur, Malappuram, Kerala</a></p>
           </div>
+        </div>
+      </div>
+      <div class="feedback-home-wrap">
+        <div class="feedback-home-card">
+          <h3>Share Your Experience</h3>
+          <p>Your feedback helps MPM Tyres improve service quality for every customer.</p>
+          <form id="experienceForm" class="feedback-home-form">
+            <div class="feedback-home-row">
+              <div class="feedback-home-field">
+                <label for="customerName">Your Name</label>
+                <input id="customerName" name="customerName" type="text" required>
+              </div>
+              <div class="feedback-home-field">
+                <label for="customerPhone">Mobile Number</label>
+                <input id="customerPhone" name="customerPhone" type="tel" required>
+              </div>
+            </div>
+            <div class="feedback-home-field">
+              <label for="customerRating">Service Rating</label>
+              <select id="customerRating" name="customerRating" required>
+                <option value="">Select rating</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Good">Good</option>
+                <option value="Average">Average</option>
+                <option value="Needs Improvement">Needs Improvement</option>
+              </select>
+            </div>
+            <div class="feedback-home-field">
+              <label for="customerExperience">Your Experience</label>
+              <textarea id="customerExperience" name="customerExperience" rows="5" placeholder="Write your experience..." required></textarea>
+            </div>
+            <button type="submit" class="feedback-home-submit">Send Feedback</button>
+            <p id="feedbackSuccessMessage" class="feedback-success-message" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </div>
@@ -319,6 +353,41 @@
         }
       });
     })();
+
+    (function () {
+      var experienceForm = document.getElementById("experienceForm");
+      if (!experienceForm) return;
+
+      experienceForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var name = document.getElementById("customerName").value.trim();
+        var phone = document.getElementById("customerPhone").value.trim();
+        var rating = document.getElementById("customerRating").value.trim();
+        var experience = document.getElementById("customerExperience").value.trim();
+        var successMessage = document.getElementById("feedbackSuccessMessage");
+
+        var subject = encodeURIComponent("Customer Experience Feedback - MPM Tyres");
+        var body = encodeURIComponent(
+          "Name: " + name + "\n" +
+          "Mobile: " + phone + "\n" +
+          "Rating: " + rating + "\n\n" +
+          "Experience:\n" + experience
+        );
+
+        if (successMessage) {
+          successMessage.textContent = "Thanks for your valuable feedback";
+          successMessage.style.display = "block";
+        }
+
+        experienceForm.reset();
+
+        setTimeout(function () {
+          window.location.href = "mailto:mpmtyre@gmail.com?subject=" + subject + "&body=" + body;
+        }, 600);
+      });
+    })();
   </script>
 </body>
 </html>
+
