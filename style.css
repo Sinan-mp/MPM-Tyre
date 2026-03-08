@@ -1101,11 +1101,6 @@ body {
         padding: 1.15rem 0.8rem;
     }
 
-    .whatsapp-float {
-        width: calc(100% - 24px);
-        justify-content: center;
-        border-radius: 12px;
-    }
 }
 
 /* Keep brand, search and menu button on one row in mobile nav */
