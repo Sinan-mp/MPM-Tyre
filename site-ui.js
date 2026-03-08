@@ -47,6 +47,10 @@
     });
   });
 
+  document.querySelectorAll('.home-float').forEach(function (homeLink) {
+    homeLink.remove();
+  });
+
   if (!document.querySelector('.whatsapp-float')) {
     var whatsappLink = document.createElement('a');
     whatsappLink.className = 'whatsapp-float';

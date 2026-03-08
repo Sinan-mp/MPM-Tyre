@@ -1108,34 +1108,37 @@ body {
     }
 }
 
-/* Place search to the right of brand on mobile */
+/* Keep brand, search and menu button on one row in mobile nav */
 @media (max-width: 991px) {
     .nav-shell {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-areas:
+            "brand search toggle"
+            "menu menu menu";
         align-items: center;
+        column-gap: 0.45rem;
+        row-gap: 0.55rem;
     }
 
     .brand-mark {
-        order: 1;
-        margin-right: 0.45rem;
+        grid-area: brand;
+        margin-right: 0;
     }
 
     #productSearchForm {
-        order: 2;
-        width: auto;
-        flex: 1 1 auto;
+        grid-area: search;
+        width: 100%;
         min-width: 0;
-        margin-top: 0;
-        margin-left: auto;
+        margin: 0;
         display: flex;
         gap: 0.4rem;
         align-items: center;
     }
 
     #productSearchForm .form-control {
-        margin-right: 0;
         min-width: 0;
+        margin-right: 0;
     }
 
     #productSearchForm .btn {
@@ -1146,13 +1149,15 @@ body {
     }
 
     .navbar-toggler {
-        order: 3;
-        margin-left: 0.45rem;
+        grid-area: toggle;
+        margin: 0;
+        justify-self: end;
     }
 
     #navbarMenu {
-        order: 4;
+        grid-area: menu;
         width: 100%;
+        order: initial;
     }
 }
 
