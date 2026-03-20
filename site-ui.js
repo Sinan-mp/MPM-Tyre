@@ -75,7 +75,6 @@
   var message = document.getElementById('reviewFormMessage');
   var submitButton = reviewForm.querySelector('button[type="submit"]');
   var apiBaseUrl = getApiBaseUrl();
-  var storageKey = 'mpmTyresReviewsFallback';
 
   function getApiBaseUrl() {
     var configuredApiBaseUrl =
@@ -108,7 +107,7 @@
   }
 
   function getMissingApiMessage() {
-    return 'Reviews are being saved on this device until an online backend is connected.';
+    return 'Reviews need a connected backend. Set apiBaseUrl in config.js to your deployed review server URL.';
   }
 
   function escapeHtml(value) {
@@ -159,25 +158,7 @@
     });
   }
 
-  function getStoredReviews() {
-    try {
-      var raw = window.localStorage.getItem(storageKey);
-      var parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function saveStoredReviews(reviews) {
-    try {
-      window.localStorage.setItem(storageKey, JSON.stringify(reviews));
-    } catch (error) {
-      // Ignore storage write failures and keep UI responsive.
-    }
-  }
-
-  function isHostedStaticSite() {
+  function requiresConfiguredBackend() {
     return (
       window.location.protocol.indexOf('http') === 0 &&
       window.location.hostname !== '127.0.0.1' &&
@@ -220,9 +201,8 @@
 
   async function loadReviews() {
     try {
-      if (isHostedStaticSite()) {
-        renderReviews(getStoredReviews());
-        return;
+      if (requiresConfiguredBackend()) {
+        throw new Error(getMissingApiMessage());
       }
 
       reviewList.innerHTML = '<p class="review-empty-state">Loading reviews...</p>';
@@ -252,18 +232,8 @@
       return;
     }
 
-    if (isHostedStaticSite()) {
-      var reviews = getStoredReviews();
-      reviews.unshift({
-        name: name,
-        rating: Number(selectedRating.value),
-        message: reviewMessage,
-        createdAt: new Date().toISOString()
-      });
-      saveStoredReviews(reviews);
-      reviewForm.reset();
-      message.textContent = 'Review submitted successfully.';
-      renderReviews(reviews);
+    if (requiresConfiguredBackend()) {
+      message.textContent = getMissingApiMessage();
       return;
     }
 
