@@ -70,13 +70,10 @@
     return;
   }
 
-  var storageKey = 'mpmTyresCustomerReviews';
   var reviewList = document.getElementById('customerReviewsList');
   var reviewCountBadge = document.getElementById('reviewCountBadge');
   var message = document.getElementById('reviewFormMessage');
-  var photoInput = document.getElementById('reviewPhoto');
-  var photoPreview = document.getElementById('reviewPhotoPreview');
-  var photoPreviewImage = document.getElementById('reviewPhotoPreviewImage');
+  var submitButton = reviewForm.querySelector('button[type="submit"]');
 
   function escapeHtml(value) {
     return String(value)
@@ -87,25 +84,24 @@
       .replace(/'/g, '&#39;');
   }
 
-  function getStoredReviews() {
-    try {
-      var raw = localStorage.getItem(storageKey);
-      return raw ? JSON.parse(raw) : [];
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function saveReviews(reviews) {
-    localStorage.setItem(storageKey, JSON.stringify(reviews));
-  }
-
   function renderStars(count) {
     return '&#9733;'.repeat(count) + '<span style="color: rgba(255,255,255,0.24);">' + '&#9733;'.repeat(5 - count) + '</span>';
   }
 
-  function renderReviews() {
-    var reviews = getStoredReviews();
+  function formatDate(value) {
+    var date = new Date(value);
+    if (isNaN(date.getTime())) {
+      return '';
+    }
+    return date.toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  function renderReviews(reviews) {
+    reviews = Array.isArray(reviews) ? reviews : [];
 
     if (reviewCountBadge) {
       reviewCountBadge.textContent = reviews.length + (reviews.length === 1 ? ' Review' : ' Reviews');
@@ -117,20 +113,18 @@
     }
 
     var html = reviews.map(function (review) {
-      var hasPhoto = Boolean(review.photo);
       return (
-        '<article class="review-card' + (hasPhoto ? '' : ' has-no-photo') + '">' +
+        '<article class="review-card">' +
           '<div class="review-card-content">' +
             '<div class="review-card-head">' +
               '<div>' +
                 '<h4>' + escapeHtml(review.name) + '</h4>' +
-                '<span class="review-date">' + escapeHtml(review.date) + '</span>' +
+                '<span class="review-date">' + escapeHtml(formatDate(review.createdAt)) + '</span>' +
               '</div>' +
               '<div class="review-stars" aria-label="' + review.rating + ' out of 5 stars">' + renderStars(review.rating) + '</div>' +
             '</div>' +
             '<p class="review-text">' + escapeHtml(review.message) + '</p>' +
           '</div>' +
-          (hasPhoto ? '<img class="review-card-photo" src="' + review.photo + '" alt="Customer review photo">' : '') +
         '</article>'
       );
     }).join('');
@@ -138,71 +132,68 @@
     reviewList.innerHTML = html;
   }
 
-  function resetPreview() {
-    if (photoPreview) {
-      photoPreview.hidden = true;
-    }
-    if (photoPreviewImage) {
-      photoPreviewImage.src = '';
+  async function loadReviews() {
+    try {
+      reviewList.innerHTML = '<p class="review-empty-state">Loading reviews...</p>';
+      var response = await fetch('/api/reviews');
+      if (!response.ok) {
+        throw new Error('Could not load reviews.');
+      }
+      var reviews = await response.json();
+      renderReviews(reviews);
+    } catch (error) {
+      reviewList.innerHTML = '<p class="review-empty-state">Could not load reviews right now.</p>';
     }
   }
 
-  photoInput.addEventListener('change', function () {
-    var file = photoInput.files && photoInput.files[0];
-    if (!file) {
-      resetPreview();
-      return;
-    }
-
-    if (!file.type || file.type.indexOf('image/') !== 0) {
-      message.textContent = 'Please select an image file only.';
-      photoInput.value = '';
-      resetPreview();
-      return;
-    }
-
-    var reader = new FileReader();
-    reader.onload = function (event) {
-      if (photoPreview && photoPreviewImage) {
-        photoPreviewImage.src = event.target.result;
-        photoPreview.hidden = false;
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-
   reviewForm.addEventListener('submit', function (event) {
     event.preventDefault();
+    submitReview();
+  });
 
+  async function submitReview() {
     var name = document.getElementById('reviewerName').value.trim();
     var selectedRating = reviewForm.querySelector('input[name="reviewRating"]:checked');
     var reviewMessage = document.getElementById('reviewMessage').value.trim();
-    var photo = photoPreviewImage && photoPreviewImage.src ? photoPreviewImage.src : '';
 
     if (!name || !selectedRating || !reviewMessage) {
       message.textContent = 'Please fill in your name, rating, and review.';
       return;
     }
 
-    var reviews = getStoredReviews();
-    reviews.unshift({
-      name: name,
-      rating: Number(selectedRating.value),
-      message: reviewMessage,
-      photo: photo,
-      date: new Date().toLocaleDateString('en-IN', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      })
-    });
+    var formData = new FormData();
+    formData.append('name', name);
+    formData.append('rating', selectedRating.value);
+    formData.append('message', reviewMessage);
 
-    saveReviews(reviews);
-    renderReviews();
-    reviewForm.reset();
-    resetPreview();
-    message.textContent = 'Your review has been added successfully.';
-  });
+    message.textContent = 'Posting your review...';
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Posting...';
+    }
 
-  renderReviews();
+    try {
+      var response = await fetch('/api/reviews', {
+        method: 'POST',
+        body: formData
+      });
+      var payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.message || 'Could not save review.');
+      }
+
+      reviewForm.reset();
+      message.textContent = 'Your review has been added successfully.';
+      await loadReviews();
+    } catch (error) {
+      message.textContent = error.message || 'Could not save review.';
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Post Review';
+      }
+    }
+  }
+
+  loadReviews();
 })();
