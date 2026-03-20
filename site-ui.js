@@ -77,6 +77,16 @@
   var apiBaseUrl = getApiBaseUrl();
 
   function getApiBaseUrl() {
+    var configuredApiBaseUrl =
+      window.MPM_CONFIG &&
+      typeof window.MPM_CONFIG.apiBaseUrl === 'string'
+        ? window.MPM_CONFIG.apiBaseUrl.trim()
+        : '';
+
+    if (configuredApiBaseUrl) {
+      return configuredApiBaseUrl.replace(/\/+$/, '');
+    }
+
     var isLiveServer =
       window.location.port === '5500' &&
       (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
@@ -85,7 +95,19 @@
       return window.location.protocol + '//localhost:4000';
     }
 
+    var isLocalNodeServer =
+      (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') &&
+      window.location.port === '4000';
+
+    if (isLocalNodeServer) {
+      return '';
+    }
+
     return '';
+  }
+
+  function getMissingApiMessage() {
+    return 'Reviews need an online backend. Set apiBaseUrl in config.js to your deployed review server URL.';
   }
 
   function escapeHtml(value) {
@@ -110,7 +132,7 @@
 
     var text = await response.text();
     if (text && text.trim().charAt(0) === '<') {
-      throw new Error('Reviews need the Node server. Open this site through http://localhost:4000, not Live Server.');
+      throw new Error(getMissingApiMessage());
     }
 
     if (!text) {
@@ -170,6 +192,10 @@
 
   async function loadReviews() {
     try {
+      if (!apiBaseUrl && window.location.protocol.indexOf('http') === 0 && window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+        throw new Error(getMissingApiMessage());
+      }
+
       reviewList.innerHTML = '<p class="review-empty-state">Loading reviews...</p>';
       var response = await fetch(apiBaseUrl + '/api/reviews');
       var reviews = await readApiResponse(response);
@@ -194,6 +220,11 @@
 
     if (!name || !selectedRating || !reviewMessage) {
       message.textContent = 'Please fill in your name, rating, and review.';
+      return;
+    }
+
+    if (!apiBaseUrl && window.location.protocol.indexOf('http') === 0 && window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+      message.textContent = getMissingApiMessage();
       return;
     }
 
