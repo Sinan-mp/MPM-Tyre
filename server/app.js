@@ -58,7 +58,7 @@ app.use(express.static(rootDir));
 app.get("/api/reviews", async function (_req, res) {
   try {
     if (mongoose.connection.readyState !== 1) {
-      res.status(503).json({ message: "Database is not connected yet." });
+      res.status(503).json({ message: "Database is not connected. Add your MongoDB Atlas MONGO_URI in the .env file and restart the server." });
       return;
     }
     const reviews = await Review.find().sort({ createdAt: -1 }).lean();
@@ -71,7 +71,7 @@ app.get("/api/reviews", async function (_req, res) {
 app.post("/api/reviews", async function (req, res) {
   try {
     if (mongoose.connection.readyState !== 1) {
-      res.status(503).json({ message: "Database is not connected yet." });
+      res.status(503).json({ message: "Database is not connected. Add your MongoDB Atlas MONGO_URI in the .env file and restart the server." });
       return;
     }
 
@@ -96,7 +96,7 @@ app.post("/api/reviews", async function (req, res) {
   }
 });
 
-app.get("*", function (_req, res) {
+app.use(function (_req, res) {
   res.sendFile(path.join(rootDir, "index.html"));
 });
 

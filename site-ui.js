@@ -74,6 +74,19 @@
   var reviewCountBadge = document.getElementById('reviewCountBadge');
   var message = document.getElementById('reviewFormMessage');
   var submitButton = reviewForm.querySelector('button[type="submit"]');
+  var apiBaseUrl = getApiBaseUrl();
+
+  function getApiBaseUrl() {
+    var isLiveServer =
+      window.location.port === '5500' &&
+      (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost');
+
+    if (isLiveServer) {
+      return window.location.protocol + '//localhost:4000';
+    }
+
+    return '';
+  }
 
   function escapeHtml(value) {
     return String(value)
@@ -86,6 +99,29 @@
 
   function renderStars(count) {
     return '&#9733;'.repeat(count) + '<span style="color: rgba(255,255,255,0.24);">' + '&#9733;'.repeat(5 - count) + '</span>';
+  }
+
+  async function readApiResponse(response) {
+    var contentType = response.headers.get('content-type') || '';
+
+    if (contentType.indexOf('application/json') !== -1) {
+      return response.json();
+    }
+
+    var text = await response.text();
+    if (text && text.trim().charAt(0) === '<') {
+      throw new Error('Reviews need the Node server. Open this site through http://localhost:4000, not Live Server.');
+    }
+
+    if (!text) {
+      throw new Error('Empty response from the review service.');
+    }
+
+    try {
+      return JSON.parse(text);
+    } catch (error) {
+      throw new Error('Invalid response from the review service.');
+    }
   }
 
   function formatDate(value) {
@@ -135,14 +171,14 @@
   async function loadReviews() {
     try {
       reviewList.innerHTML = '<p class="review-empty-state">Loading reviews...</p>';
-      var response = await fetch('/api/reviews');
+      var response = await fetch(apiBaseUrl + '/api/reviews');
+      var reviews = await readApiResponse(response);
       if (!response.ok) {
-        throw new Error('Could not load reviews.');
+        throw new Error(reviews.message || 'Could not load reviews.');
       }
-      var reviews = await response.json();
       renderReviews(reviews);
     } catch (error) {
-      reviewList.innerHTML = '<p class="review-empty-state">Could not load reviews right now.</p>';
+      reviewList.innerHTML = '<p class="review-empty-state">' + escapeHtml(error.message || 'Could not load reviews right now.') + '</p>';
     }
   }
 
@@ -161,11 +197,6 @@
       return;
     }
 
-    var formData = new FormData();
-    formData.append('name', name);
-    formData.append('rating', selectedRating.value);
-    formData.append('message', reviewMessage);
-
     message.textContent = 'Posting your review...';
     if (submitButton) {
       submitButton.disabled = true;
@@ -173,11 +204,18 @@
     }
 
     try {
-      var response = await fetch('/api/reviews', {
+      var response = await fetch(apiBaseUrl + '/api/reviews', {
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          rating: Number(selectedRating.value),
+          message: reviewMessage
+        })
       });
-      var payload = await response.json();
+      var payload = await readApiResponse(response);
       if (!response.ok) {
         throw new Error(payload.message || 'Could not save review.');
       }
