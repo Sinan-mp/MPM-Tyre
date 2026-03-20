@@ -171,6 +171,70 @@
     </div>
   </section>
 
+  <section id="reviews" class="section section-reviews">
+    <div class="container">
+      <div class="section-head">
+        <h2>Customer Reviews</h2>
+        <p>Customers can share their experience, rate our service, and upload a photo.</p>
+      </div>
+
+      <div class="reviews-layout">
+        <div class="review-form-card">
+          <h3>Write a Review</h3>
+          <form id="customerReviewForm" class="review-form">
+            <div class="review-form-field">
+              <label for="reviewerName">Your Name</label>
+              <input id="reviewerName" name="reviewerName" type="text" placeholder="Enter your name" required>
+            </div>
+
+            <div class="review-form-field">
+              <label>Your Rating</label>
+              <div class="star-rating" id="starRating" role="radiogroup" aria-label="Customer star rating">
+                <input type="radio" id="star5" name="reviewRating" value="5" required>
+                <label for="star5" title="5 stars">&#9733;</label>
+                <input type="radio" id="star4" name="reviewRating" value="4">
+                <label for="star4" title="4 stars">&#9733;</label>
+                <input type="radio" id="star3" name="reviewRating" value="3">
+                <label for="star3" title="3 stars">&#9733;</label>
+                <input type="radio" id="star2" name="reviewRating" value="2">
+                <label for="star2" title="2 stars">&#9733;</label>
+                <input type="radio" id="star1" name="reviewRating" value="1">
+                <label for="star1" title="1 star">&#9733;</label>
+              </div>
+            </div>
+
+            <div class="review-form-field">
+              <label for="reviewMessage">Your Review</label>
+              <textarea id="reviewMessage" name="reviewMessage" rows="5" placeholder="Tell us about your experience" required></textarea>
+            </div>
+
+            <div class="review-form-field">
+              <label for="reviewPhoto">Upload Photo</label>
+              <input id="reviewPhoto" name="reviewPhoto" type="file" accept="image/*">
+              <p class="review-photo-note">Optional. Best for shop visit, service, or tyre photos.</p>
+              <div id="reviewPhotoPreview" class="review-photo-preview" hidden>
+                <img id="reviewPhotoPreviewImage" src="" alt="Selected review preview">
+              </div>
+            </div>
+
+            <button type="submit" class="review-submit-btn">Post Review</button>
+            <p id="reviewFormMessage" class="review-form-message" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="review-list-card">
+          <div class="review-list-head">
+            <h3>Recent Reviews</h3>
+            <span id="reviewCountBadge" class="review-count-badge">0 Reviews</span>
+          </div>
+          <div id="customerReviewsList" class="customer-reviews-list">
+            <p class="review-empty-state">No reviews yet. Be the first customer to write one.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="contact" class="section section-contact">
     <div class="container">
       <div class="section-head">

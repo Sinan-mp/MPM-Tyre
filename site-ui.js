@@ -63,3 +63,146 @@
   }
 
 })();
+
+(function () {
+  var reviewForm = document.getElementById('customerReviewForm');
+  if (!reviewForm) {
+    return;
+  }
+
+  var storageKey = 'mpmTyresCustomerReviews';
+  var reviewList = document.getElementById('customerReviewsList');
+  var reviewCountBadge = document.getElementById('reviewCountBadge');
+  var message = document.getElementById('reviewFormMessage');
+  var photoInput = document.getElementById('reviewPhoto');
+  var photoPreview = document.getElementById('reviewPhotoPreview');
+  var photoPreviewImage = document.getElementById('reviewPhotoPreviewImage');
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function getStoredReviews() {
+    try {
+      var raw = localStorage.getItem(storageKey);
+      return raw ? JSON.parse(raw) : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveReviews(reviews) {
+    localStorage.setItem(storageKey, JSON.stringify(reviews));
+  }
+
+  function renderStars(count) {
+    return '&#9733;'.repeat(count) + '<span style="color: rgba(255,255,255,0.24);">' + '&#9733;'.repeat(5 - count) + '</span>';
+  }
+
+  function renderReviews() {
+    var reviews = getStoredReviews();
+
+    if (reviewCountBadge) {
+      reviewCountBadge.textContent = reviews.length + (reviews.length === 1 ? ' Review' : ' Reviews');
+    }
+
+    if (!reviews.length) {
+      reviewList.innerHTML = '<p class="review-empty-state">No reviews yet. Be the first customer to write one.</p>';
+      return;
+    }
+
+    var html = reviews.map(function (review) {
+      var hasPhoto = Boolean(review.photo);
+      return (
+        '<article class="review-card' + (hasPhoto ? '' : ' has-no-photo') + '">' +
+          '<div class="review-card-content">' +
+            '<div class="review-card-head">' +
+              '<div>' +
+                '<h4>' + escapeHtml(review.name) + '</h4>' +
+                '<span class="review-date">' + escapeHtml(review.date) + '</span>' +
+              '</div>' +
+              '<div class="review-stars" aria-label="' + review.rating + ' out of 5 stars">' + renderStars(review.rating) + '</div>' +
+            '</div>' +
+            '<p class="review-text">' + escapeHtml(review.message) + '</p>' +
+          '</div>' +
+          (hasPhoto ? '<img class="review-card-photo" src="' + review.photo + '" alt="Customer review photo">' : '') +
+        '</article>'
+      );
+    }).join('');
+
+    reviewList.innerHTML = html;
+  }
+
+  function resetPreview() {
+    if (photoPreview) {
+      photoPreview.hidden = true;
+    }
+    if (photoPreviewImage) {
+      photoPreviewImage.src = '';
+    }
+  }
+
+  photoInput.addEventListener('change', function () {
+    var file = photoInput.files && photoInput.files[0];
+    if (!file) {
+      resetPreview();
+      return;
+    }
+
+    if (!file.type || file.type.indexOf('image/') !== 0) {
+      message.textContent = 'Please select an image file only.';
+      photoInput.value = '';
+      resetPreview();
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function (event) {
+      if (photoPreview && photoPreviewImage) {
+        photoPreviewImage.src = event.target.result;
+        photoPreview.hidden = false;
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  reviewForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var name = document.getElementById('reviewerName').value.trim();
+    var selectedRating = reviewForm.querySelector('input[name="reviewRating"]:checked');
+    var reviewMessage = document.getElementById('reviewMessage').value.trim();
+    var photo = photoPreviewImage && photoPreviewImage.src ? photoPreviewImage.src : '';
+
+    if (!name || !selectedRating || !reviewMessage) {
+      message.textContent = 'Please fill in your name, rating, and review.';
+      return;
+    }
+
+    var reviews = getStoredReviews();
+    reviews.unshift({
+      name: name,
+      rating: Number(selectedRating.value),
+      message: reviewMessage,
+      photo: photo,
+      date: new Date().toLocaleDateString('en-IN', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    });
+
+    saveReviews(reviews);
+    renderReviews();
+    reviewForm.reset();
+    resetPreview();
+    message.textContent = 'Your review has been added successfully.';
+  });
+
+  renderReviews();
+})();
